@@ -1,5 +1,8 @@
 package com.luv2code.hibernate.demo;
 
+import java.text.ParseException;
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -9,7 +12,7 @@ import com.luv2code.hibernate.demo.entity.Student;
 
 public class CreateStudentDemo {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		
 //		create session factory / create only once in whole app 
 		SessionFactory factory = new Configuration()
@@ -21,10 +24,13 @@ public class CreateStudentDemo {
 		Session session = factory.getCurrentSession(); 
 
 		try {
+			String theDateOfBirthStr = "31/12/1998";
+			
+			Date theDateOfBirth = DateUtils.parseDate(theDateOfBirthStr);
 			
 //			create student object
 			System.out.println("Creating object to save");
-			Student std=new Student("naseema", "saifi", "theahmadkabeer@gmail.com" );
+			Student tempStudent = new Student("Pauly", "Doe", "paul@luv.com", theDateOfBirth);
 			
 //			start transaction
 			System.out.println("Begin session1");
@@ -32,7 +38,7 @@ public class CreateStudentDemo {
 			
 //			save object
 			System.out.println("Saving data");
-			session.save(std);
+			session.save(tempStudent);
 			
 //			make commit
 			System.out.println("commit session1");
